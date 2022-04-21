@@ -91,10 +91,8 @@ public class UserDAOImpl extends DBContext implements UserDAO {
                 return user;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } catch (Exception ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             closeResultSet(rs);
