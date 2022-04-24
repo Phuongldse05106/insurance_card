@@ -102,6 +102,5 @@ public class Users {
     public void setAddress(String address) {
         this.address = address;
     }
-    
-    
+   
 }

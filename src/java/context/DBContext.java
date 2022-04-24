@@ -16,11 +16,11 @@ import javax.naming.NamingException;
  */
 public class DBContext {
     
-  private String HOST = "localhost";
+    private String HOST = "localhost";
     private String PORT = "1433";
-    private String DATABASE_NAME = "CMS";
+    private String DATABASE_NAME = "DB_SWP391_Project";
     private String USERNAME = "sa";
-    private String PASSWORD = "123456";
+    private String PASSWORD = "123123";
 
 
     /**
