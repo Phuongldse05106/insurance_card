@@ -5,6 +5,7 @@
  */
 package dao;
 
+import entity.Account;
 import entity.Users;
 import java.sql.SQLException;
 import java.util.List;
@@ -18,4 +19,8 @@ public interface UserDAO {
     List<Users> getAllAccount() throws SQLException, Exception;
 
     Users getAccountById(int id) throws SQLException, Exception;
+    
+    void createAccount(Account user)throws SQLException, Exception;
+    
+    boolean checkUsernameAndEmail(String username, String email) throws SQLException, Exception;
 }
