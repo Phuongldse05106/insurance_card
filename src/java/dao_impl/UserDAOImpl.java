@@ -15,8 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -199,7 +197,7 @@ public class UserDAOImpl extends DBContext implements UserDAO {
             while (rs.next()) {
                 return true;
             }
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw ex;
         } catch (Exception ex) {
             throw ex;
@@ -210,6 +208,77 @@ public class UserDAOImpl extends DBContext implements UserDAO {
         }
         return false;
     }
+
+    @Override
+    public boolean checkUsernameAndEmail2(String username, String email, int userID) throws SQLException, Exception {
+        Connection connecion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        try {
+            connecion = getConnection();
+            // Get data
+            preparedStatement = connecion.prepareStatement("select * from [user] where username = ? or email = ? and user_id NOT LIKE ?");
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, email);
+            preparedStatement.setInt(3, userID);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            if (rs != null && !rs.isClosed()) {
+                rs.close();
+            }
+            if (preparedStatement != null && !preparedStatement.isClosed()) {
+                preparedStatement.close();
+            }
+            if (connecion != null && !connecion.isClosed()) {
+                connecion.close();
+            }
+//            closeResultSet(rs);
+//            closePreparedStatement(preparedStatement);
+//            closeConnection(connecion);
+        }
+        return false;
+    }
+
+    @Override
+    public void editAccount(Account user) throws SQLException, Exception {
+        Connection connecion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        try {
+            connecion = getConnection();
+            // Get data
+            preparedStatement = connecion.prepareStatement("update [user] set email = ?, fullname = ?, dob = ?,"
+                    + " phone = ? , address = ? , role_id = ?,  username = ? , gender = ? where user_id = ?");
+
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2, user.getFullName());
+            preparedStatement.setDate(3, user.getBirthDate());
+            preparedStatement.setString(4, user.getPhone());
+            preparedStatement.setString(5, user.getAddress());
+            preparedStatement.setInt(6, user.getRoleId());
+            preparedStatement.setString(7, user.getUsername());
+            if (user.isGender()) {
+                preparedStatement.setInt(8, 1);
+            } else {
+                preparedStatement.setInt(8, 0);
+            }
+            preparedStatement.setInt(9, user.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            closeResultSet(rs);
+            closePreparedStatement(preparedStatement);
+            closeConnection(connecion);
+        }
+    }
 }
-
-

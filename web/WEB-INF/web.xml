@@ -8,6 +8,14 @@
         <servlet-name>CreateAccountController</servlet-name>
         <servlet-class>controller.CreateAccountController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchAccountController</servlet-name>
+        <servlet-class>controller.SearchAccountController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditAccountController</servlet-name>
+        <servlet-class>controller.EditAccountController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ViewAllAccountController</servlet-name>
         <url-pattern>/ViewAllAccountController</url-pattern>
@@ -15,6 +23,14 @@
     <servlet-mapping>
         <servlet-name>CreateAccountController</servlet-name>
         <url-pattern>/CreateAccountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchAccountController</servlet-name>
+        <url-pattern>/SearchAccountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditAccountController</servlet-name>
+        <url-pattern>/EditAccountController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

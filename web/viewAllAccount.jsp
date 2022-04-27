@@ -34,6 +34,23 @@
             </c:if>
         </c:if>
 
+        <c:if test="${checkEdit != null}">
+            <c:if test="${checkEdit == true}">
+                <script>
+                    $(document).ready(function () {
+                        swal("Chỉnh sửa tài khoản thành công !", "Yeahhh", "success");
+                    });
+                </script>
+            </c:if>
+            <c:if test="${checkEdit == false}">
+                <script>
+                    $(document).ready(function () {
+                        swal("Tài khoản hoặc email đã tồn tại !", "Nhập lại", "error");
+                    });
+                </script>
+            </c:if>
+        </c:if>        
+
         <c:if test="${checkDate == false}">
             <script>
                 $(document).ready(function () {
@@ -104,7 +121,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form  id="myForm" action="../InsuranceCard/CreateAccountController" method="GET">
+                                    <form  id="myForm" action="../InsuranceCard/CreateAccountController" method="POST">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="inputRole">Vai trò</label>
@@ -254,9 +271,9 @@
                     </form>
 
 
-                    <div class="modal fade" id="edit${user.userId}">
+                    <div class="modal fade" id="edit${i.userId}">
                         <div class="modal-dialog">
-                            <form action="UpdateAccountController" method="GET">
+                            <form action="EditAccountController" method="POST">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h4 class="modal-title custom_align" id="Heading">Chỉnh sửa tài khoản</h4>
@@ -268,44 +285,44 @@
                                     <div class="modal-body">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="inputRole">Chức vụ</label>
-                                                <select id="inputRole" class="form-control" name="roleId" value="${user.role}">
-                                                    <option value="1">Admin</option>
-                                                    <option value="2">Manager</option>
-                                                    <option value="3">Doctor</option>
-                                                    <option value="4">Customer</option>
-                                                </select>                                    
+                                                <label for="inputRole">Vai trò</label>
+                                                <input type="text" class="form-control" required maxlength="20" name="username" value="${i.role}">
+<!--                                                <select id="inputRole" class="form-control" name="roleId" value="${i.role}">
+                                                    <option value="1">Quản trị viên</option>
+                                                    <option value="2">Nhân viên</option>
+                                                    <option value="3">Khách hàng</option>
+                                                </select>                                    -->
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputAccount">Tài khoản</label>
-                                                <input type="text" class="form-control" required maxlength="20" name="username" value="${user.username}">
+                                                <input type="text" class="form-control" required maxlength="20" name="username" value="${i.username}">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Họ và tên</label>
-                                            <input type="text" class="form-control"required maxlength="20" name="fullName" value="${user.fullName}">
+                                            <input type="text" class="form-control"required maxlength="20" name="fullName" value="${i.fullName}">
                                         </div>
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" class="form-control"required maxlength="30" name="email" value="${user.email}">
+                                            <input type="email" class="form-control"required maxlength="30" name="email" value="${i.email}">
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label>Địa chỉ</label>
-                                                <input type="text" class="form-control"required maxlength="30" name="address" value="${user.address}">
+                                                <input type="text" class="form-control"required maxlength="30" name="address" value="${i.address}">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Số điện thoại</label>
-                                                <input type="tel" class="form-control"required maxlength="15" name="phone" value="${user.phone}" pattern="[0][0-9]{9}">
+                                                <input type="tel" class="form-control"required maxlength="15" name="phone" value="${i.phone}" pattern="[0][0-9]{9}">
 
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Ngày sinh</label>
-                                                <input type="date" class="form-control" name="date" required id="inputBirthDate" value="${user.birthDate}">
+                                                <input type="date" class="form-control" name="date" required id="inputBirthDate" value="${i.birthDate}">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Giới tính</label>
-                                                <select id="inputGender" class="form-control" name="gender" value="${user.gender == "true" ? "Nam" : "Nữ"}">
+                                                <select id="inputGender" class="form-control" name="gender" value="${i.gender == "true" ? "Nam" : "Nữ"}">
                                                     <option value="1">Nam</option>
                                                     <option value="2">Nữ</option>
                                                 </select>
@@ -313,7 +330,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6" hidden>
-                                        <input type="text" class="form-control" name="userId" id="inputBirthDate" value="${user.userId}">
+                                        <input type="text" class="form-control" name="userId" id="inputBirthDate" value="${i.userId}">
                                     </div>
                                     <div class="modal-footer ">
                                         <button type="submit" class="btn btn-primary btn-xs btn-lg col-md-6" style="width: 100%;">Lưu</button>

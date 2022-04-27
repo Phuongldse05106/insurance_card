@@ -10,6 +10,7 @@ import dao_impl.UserDAOImpl;
 import entity.Account;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author dell
  */
-public class CreateAccountController extends HttpServlet {
+public class EditAccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,16 +37,15 @@ public class CreateAccountController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
-//        HttpSession session = request.getSession();
+            throws ServletException, IOException, ParseException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         boolean checkDate;
         checkDate = true;
-        boolean checkAdd;
-        checkAdd = true;
+        boolean checkEdit;
+        checkEdit = true;
+        int userId = Integer.parseInt(request.getParameter("userId"));
         int roleId = Integer.parseInt(request.getParameter("roleId"));
         String username = request.getParameter("username");
-        String password = request.getParameter("password");
         String email = request.getParameter("email");
         String fullName = request.getParameter("fullName");
         String birthDate = request.getParameter("date");
@@ -66,9 +66,9 @@ public class CreateAccountController extends HttpServlet {
             return;
         }
         UserDAO userDAO = new UserDAOImpl();
-        if (userDAO.checkUsernameAndEmail(username.trim(), email.trim())) {
-            checkAdd = false;
-            request.setAttribute("checkAdd", checkAdd);
+        if (userDAO.checkUsernameAndEmail2(username.trim(), email.trim(),userId)) {
+            checkEdit = false;
+            request.setAttribute("checkEdit", checkEdit);
             request.getRequestDispatcher("ViewAllAccountController").forward(request, response);
             response.sendRedirect("ViewAllAccountController");
             return;
@@ -77,7 +77,6 @@ public class CreateAccountController extends HttpServlet {
         u.setRoleId(roleId);
         u.setUsername(username);
         u.setEmail(email);
-        u.setPassword(password);
         u.setFullName(fullName);
         u.setBirthDate(sqlDate);
         if (gender == 1) {
@@ -87,16 +86,14 @@ public class CreateAccountController extends HttpServlet {
         }
         u.setPhone(phone);
         u.setAddress(address);
-        userDAO.createAccount(u);
-        checkAdd = true;
-        request.setAttribute("checkAdd", checkAdd);
+        userDAO.editAccount(u);
+        request.setAttribute("checkEdit", checkEdit);
         request.getRequestDispatcher("ViewAllAccountController").forward(request, response);
         response.sendRedirect("ViewAllAccountController");
-//        ViewAllAccountController accountController = new ViewAllAccountController();
-//        accountController.processRequest(request, response);
+
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -111,7 +108,7 @@ public class CreateAccountController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(CreateAccountController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditAccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -129,7 +126,7 @@ public class CreateAccountController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(CreateAccountController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditAccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
