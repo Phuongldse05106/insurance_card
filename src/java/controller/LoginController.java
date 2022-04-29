@@ -6,13 +6,18 @@
 package controller;
 
 import dao.LoginDaoImpl;
+import entity.Role;
 import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.apache.catalina.User;
 
 /**
  *
@@ -35,14 +40,43 @@ public class LoginController extends HttpServlet {
         try {
             String user = request.getParameter("username");
             String pass = request.getParameter("password");
+
             LoginDaoImpl loginDAO = new LoginDaoImpl();
-            Users a = loginDAO.checkAccount( user, pass);
-            if(a==null){
+
+            Users a = loginDAO.checkAccount(user, pass);
+
+            if (a == null) {
                 request.setAttribute("mess", "Wrong user or password !");
                 request.getRequestDispatcher("Login.jsp").forward(request, response);
-                
-            }else{
-                request.getRequestDispatcher("Success.jsp").forward(request, response);
+
+            } else {
+//                HttpSession session = request.getSession();
+//                session.setAttribute("acc", a);
+//                session.setMaxInactiveInterval(186400);
+//                response.sendRedirect();
+                Cookie cookie = new Cookie("userId", String.valueOf(a.getUserId()));
+                cookie.setMaxAge(30000000);
+//                cookie.setUserId(1);
+//                cookie.setPath(request.getContextPath());
+//                cookie.setComment("1");
+////                cookie.setVersion(1);
+//                System.out.println("Cookie created!");
+                response.addCookie(cookie);
+                switch (a.getRole()) {
+                    case "1":
+//                        response.sendRedirect("AdminPage.jsp");
+                        request.getRequestDispatcher("AdminPage.jsp").forward(request, response);
+                    case "2":
+//                        response.sendRedirect("StaffPage.jsp");
+                        request.getRequestDispatcher("StaffPage.jsp").forward(request, response);
+                    case "3":
+//                        response.sendRedirect("CustomerPage.jsp");
+                        request.getRequestDispatcher("CustomerPage.jsp").forward(request, response);
+                    default:
+                        break;
+
+                }
+
             }
         } catch (Exception e) {
         }

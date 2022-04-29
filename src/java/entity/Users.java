@@ -22,12 +22,12 @@ public class Users {
     private boolean gender;
     private String phone;
     private String address;
+    private int isenable;
 
     public Users() {
     }
 
-    
-    public Users(int userId, String role, String username, String email, String password, String fullName, Date birthDate, boolean gender, String phone, String address) {
+    public Users(int userId, String role, String username, String email, String password, String fullName, Date birthDate, boolean gender, String phone, String address, int isenable) {
         this.userId = userId;
         this.role = role;
         this.username = username;
@@ -38,9 +38,8 @@ public class Users {
         this.gender = gender;
         this.phone = phone;
         this.address = address;
+        this.isenable = isenable;
     }
-
-
 
     public int getUserId() {
         return userId;
@@ -122,10 +121,21 @@ public class Users {
         this.address = address;
     }
 
+    public int getIsenable() {
+        return isenable;
+    }
+
+    public void setIsenable(int isenable) {
+        this.isenable = isenable;
+    }
+
     @Override
     public String toString() {
-        return "Users{" + "userId=" + userId + ", role=" + role + ", username=" + username + ", email=" + email + ", password=" + password + ", fullName=" + fullName + ", birthDate=" + birthDate + ", gender=" + gender + ", phone=" + phone + ", address=" + address + '}';
+        return "Users{" + "userId=" + userId + ", role=" + role + ", username=" + username + ", email=" + email + ", password=" + password + ", fullName=" + fullName + ", birthDate=" + birthDate + ", gender=" + gender + ", phone=" + phone + ", address=" + address + ", isenable=" + isenable + '}';
     }
+
+    
+    
     
     
 }

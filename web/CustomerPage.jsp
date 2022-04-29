@@ -90,9 +90,26 @@
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="material-icons opacity-10">table_view</i>
                             </div>
-                            <span class="nav-link-text ms-1">Quản lý tài khoản</span>
+                            <span class="nav-link-text ms-1">Hợp đồng</span>
                         </a>
-                       
+                        <a class="nav-link text-white " href="./pages/tables.html">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">table_view</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Sự kiện bảo hiểm</span>
+                        </a>
+                        <a class="nav-link text-white " href="./pages/tables.html">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">table_view</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Bồi thường</span>
+                        </a>
+                        <a class="nav-link text-white " href="./pages/tables.html">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">table_view</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Đánh giá</span>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -116,7 +133,7 @@
                             </div>
                         </div>
                         <div class="dropdown">
-                            <button class="dropbtn">Quản trị viên</button>
+                            <button class="dropbtn">Khách hàng</button>
                             <div class="dropdown-content">
                                 <a href="#">Thông tin cá nhân</a>
                                 <a href="#">Đổi mật khẩu</a>

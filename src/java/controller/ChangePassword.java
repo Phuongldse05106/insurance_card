@@ -5,9 +5,13 @@
  */
 package controller;
 
+import dao.LoginDaoImpl;
+import dao_impl.ChangePasswordDaoImpl;
+import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author chubo
  */
-public class UserAuthorizationController extends HttpServlet {
+public class ChangePassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,17 +34,32 @@ public class UserAuthorizationController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UserAuthorizationController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UserAuthorizationController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        try {
+//            HttpSession sesson = request.getSession();
+            String oldPass = request.getParameter("oldPassword");
+            String newPass = request.getParameter("newPassword");
+            String newPassAgain = request.getParameter("newPasswordAgain");
+
+            ChangePasswordDaoImpl changePass = new ChangePasswordDaoImpl();
+
+            Cookie[] cookies = request.getCookies();
+
+            int userId = 0;
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("userId")) {
+                        //do something
+                        userId = Integer.parseInt(cookie.getValue());
+                        //value can be retrieved using #cookie.getValue()
+                    }
+                }
+            }
+            if (userId != 0) {
+                changePass.changePassword(userId, newPass);
+            }
+
+        } catch (Exception e) {
+
         }
     }
 
@@ -83,4 +102,3 @@ public class UserAuthorizationController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-}
