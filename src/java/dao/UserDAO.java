@@ -26,6 +26,6 @@ public interface UserDAO {
 
     void editAccount(Account user) throws SQLException, Exception;
 
-    boolean checkUsernameAndEmail2(String username, String email, int userID) throws SQLException, Exception;
+    boolean checkUsernameAndEmailById(String username, String email, int userID) throws SQLException, Exception;
 
 }

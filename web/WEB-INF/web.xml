@@ -16,6 +16,10 @@
         <servlet-name>EditAccountController</servlet-name>
         <servlet-class>controller.EditAccountController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterController</servlet-name>
+        <servlet-class>controller.RegisterController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ViewAllAccountController</servlet-name>
         <url-pattern>/ViewAllAccountController</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>EditAccountController</servlet-name>
         <url-pattern>/EditAccountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterController</servlet-name>
+        <url-pattern>/RegisterController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

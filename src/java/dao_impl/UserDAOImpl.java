@@ -210,14 +210,14 @@ public class UserDAOImpl extends DBContext implements UserDAO {
     }
 
     @Override
-    public boolean checkUsernameAndEmail2(String username, String email, int userID) throws SQLException, Exception {
+    public boolean checkUsernameAndEmailById(String username, String email, int userID) throws SQLException, Exception {
         Connection connecion = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         try {
             connecion = getConnection();
             // Get data
-            preparedStatement = connecion.prepareStatement("select * from [user] where username = ? or email = ? and user_id NOT LIKE ?");
+            preparedStatement = connecion.prepareStatement("select * from [user] where (username = ? or email = ?) and user_id NOT LIKE ?");
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, email);
             preparedStatement.setInt(3, userID);
@@ -255,7 +255,7 @@ public class UserDAOImpl extends DBContext implements UserDAO {
             connecion = getConnection();
             // Get data
             preparedStatement = connecion.prepareStatement("update [user] set email = ?, fullname = ?, dob = ?,"
-                    + " phone = ? , address = ? , role_id = ?,  username = ? , gender = ? where user_id = ?");
+                    + " phone = ? , [address] = ? , role_id = ?,  username = ? , gender = ? where user_id = ?");
 
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setString(2, user.getFullName());
@@ -276,9 +276,18 @@ public class UserDAOImpl extends DBContext implements UserDAO {
         } catch (Exception ex) {
             throw ex;
         } finally {
-            closeResultSet(rs);
-            closePreparedStatement(preparedStatement);
-            closeConnection(connecion);
+            if (rs != null && !rs.isClosed()) {
+                rs.close();
+            }
+            if (preparedStatement != null && !preparedStatement.isClosed()) {
+                preparedStatement.close();
+            }
+            if (connecion != null && !connecion.isClosed()) {
+                connecion.close();
+            }
+//            closeResultSet(rs);
+//            closePreparedStatement(preparedStatement);
+//            closeConnection(connecion);
         }
     }
 }

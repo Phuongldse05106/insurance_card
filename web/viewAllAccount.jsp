@@ -273,7 +273,7 @@
 
                     <div class="modal fade" id="edit${i.userId}">
                         <div class="modal-dialog">
-                            <form action="EditAccountController" method="POST">
+                            <form action="EditAccountController" method="GET">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h4 class="modal-title custom_align" id="Heading">Chỉnh sửa tài khoản</h4>
@@ -286,12 +286,10 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="inputRole">Vai trò</label>
-                                                <input type="text" class="form-control" required maxlength="20" name="username" value="${i.role}">
-<!--                                                <select id="inputRole" class="form-control" name="roleId" value="${i.role}">
-                                                    <option value="1">Quản trị viên</option>
-                                                    <option value="2">Nhân viên</option>
-                                                    <option value="3">Khách hàng</option>
-                                                </select>                                    -->
+                                                <select class="form-control" name="roleId" value="${i.role}">
+                                                    <option value="2" ${i.role == 'Nhân viên' ? 'selected' : ''}>Nhân viên</option>
+                                                    <option value="3" ${i.role == 'Khách hàng' ? 'selected' : ''}>Khách hàng</option>
+                                                </select>                                    
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputAccount">Tài khoản</label>
@@ -318,13 +316,13 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Ngày sinh</label>
-                                                <input type="date" class="form-control" name="date" required id="inputBirthDate" value="${i.birthDate}">
+                                                <input type="date" class="form-control" name="birthDate" required value="${i.birthDate}">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Giới tính</label>
-                                                <select id="inputGender" class="form-control" name="gender" value="${i.gender == "true" ? "Nam" : "Nữ"}">
-                                                    <option value="1">Nam</option>
-                                                    <option value="2">Nữ</option>
+                                                <select  class="form-control" name="gender">
+                                                    <option value="1" ${i.gender == true ? 'selected' : ''}>Nam</option>
+                                                    <option value="2" ${i.gender == false ? 'selected' : ''}>Nữ</option>
                                                 </select>
                                             </div>
                                         </div>

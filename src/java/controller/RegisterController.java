@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author dell
  */
-public class EditAccountController extends HttpServlet {
+public class RegisterController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,57 +40,55 @@ public class EditAccountController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException, Exception {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        boolean checkPass;
         boolean checkDate;
-        boolean checkEdit;
-        checkEdit = true;
-        int userId = Integer.parseInt(request.getParameter("userId"));
-        int roleId = Integer.parseInt(request.getParameter("roleId"));
-        String username = request.getParameter("username");
-        String email = request.getParameter("email");
-        String fullName = request.getParameter("fullName");
-        String birthDate = request.getParameter("birthDate");
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        format.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
+        boolean checkAdd;
+        String fullname = request.getParameter("fullname").trim();
+        String email = request.getParameter("email").trim();
+        String username = request.getParameter("username").trim();
+        String password = request.getParameter("password").trim();
+        String repassword = request.getParameter("repassword").trim();
+        String birthDate = request.getParameter("birthDate").trim();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
         java.util.Date date = format.parse(birthDate);
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
         java.util.Date today = new java.util.Date();
-        int gender = Integer.parseInt(request.getParameter("gender"));
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
+        int check = Integer.parseInt(request.getParameter("gender").trim());
+        boolean gender;
+        if (check == 1) {
+            gender = true;
+        } else {
+            gender = false;
+        }
+        String phone = request.getParameter("phone").trim();
+        String address = request.getParameter("address").trim();
+        if(!password.equals(repassword)){
+            checkPass = false;
+            request.setAttribute("checkPass", checkPass);
+            request.getRequestDispatcher("Register.jsp").forward(request, response);
+        }
         if (date.after(today)) {
             checkDate = false;
             request.setAttribute("checkDate", checkDate);
-            request.getRequestDispatcher("ViewAllAccountController").forward(request, response);
-            response.sendRedirect("ViewAllAccountController");
-            //request.getRequestDispatcher("./viewAllAccount.jsp").forward(request, response);
+            request.getRequestDispatcher("Register.jsp").forward(request, response);
+//            response.sendRedirect("ViewAllAccountController");
             return;
         }
         UserDAO userDAO = new UserDAOImpl();
-        if (userDAO.checkUsernameAndEmailById(username.trim(), email.trim(),userId)) {
-            checkEdit = false;
-            request.setAttribute("checkEdit", checkEdit);
-            request.getRequestDispatcher("ViewAllAccountController").forward(request, response);
-            response.sendRedirect("ViewAllAccountController");
+        if (userDAO.checkUsernameAndEmail(username, email)) {
+            checkAdd = false;
+            request.setAttribute("checkAdd", checkAdd);
+            request.getRequestDispatcher("Register.jsp").forward(request, response);
+//            response.sendRedirect("ViewAllAccountController");
             return;
         }
-        Account u = new Account();
-        u.setRoleId(roleId);
-        u.setUsername(username);
-        u.setEmail(email);
-        u.setFullName(fullName);
-        u.setBirthDate(sqlDate);
-        if (gender == 1) {
-            u.setGender(true);
-        } else {
-            u.setGender(false);
-        }
-        u.setPhone(phone);
-        u.setAddress(address);
-        u.setUserId(userId);
-        userDAO.editAccount(u);
-        request.setAttribute("checkEdit", checkEdit);
-        request.getRequestDispatcher("ViewAllAccountController").forward(request, response);
-        response.sendRedirect("ViewAllAccountController");
+        Account u = new Account(3, username, email, password, fullname, sqlDate, gender, phone, address); 
+        userDAO.createAccount(u);
+        checkAdd = true;
+        request.setAttribute("checkAdd", checkAdd);
+        request.getRequestDispatcher("Login.jsp").forward(request, response);
+        response.sendRedirect("Login.jsp");
 
     }
 
@@ -108,8 +106,10 @@ public class EditAccountController extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(EditAccountController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -126,8 +126,10 @@ public class EditAccountController extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(EditAccountController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
