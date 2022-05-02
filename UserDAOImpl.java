@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package daoimpl;
+package dao_impl;
 
 import context.DBContext;
 import dao.UserDAO;
+import entity.Compensation;
 import entity.Contract;
 import entity.Motobike;
 import entity.Users;
@@ -54,16 +55,8 @@ public class UserDAOImpl extends DBContext implements UserDAO {
             }
             return users;
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        } catch (Exception ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        } finally {
-            closeResultSet(rs);
-            closePreparedStatement(preparedStatement);
-            closeConnection(connecion);
         }
+        return null;
     }
 
     @Override
@@ -97,15 +90,7 @@ public class UserDAOImpl extends DBContext implements UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
-        } catch (Exception ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        } finally {
-            closeResultSet(rs);
-            closePreparedStatement(preparedStatement);
-            closeConnection(connecion);
         }
-
         return null;
     }
     
@@ -139,13 +124,6 @@ public class UserDAOImpl extends DBContext implements UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
-        } catch (Exception ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        } finally {
-            closeResultSet(rs);
-            closePreparedStatement(preparedStatement);
-            closeConnection(connecion);
         }
     }
 
@@ -173,13 +151,6 @@ public class UserDAOImpl extends DBContext implements UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
-        } catch (Exception ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        } finally {
-            closeResultSet(rs);
-            closePreparedStatement(preparedStatement);
-            closeConnection(connecion);
         }
     }
     
@@ -212,13 +183,6 @@ public class UserDAOImpl extends DBContext implements UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
-        } catch (Exception ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        } finally {
-            closeResultSet(rs);
-            closePreparedStatement(preparedStatement);
-            closeConnection(connecion);
         }
         return users;
     }
@@ -231,10 +195,7 @@ public class UserDAOImpl extends DBContext implements UserDAO {
         List<Users> users = new ArrayList<>();
         try {
             connecion = getConnection();
-            preparedStatement = connecion.prepareStatement("select u.user_id, r.name, u.username, u.email, u.password, u.fullname, u.dob, u.gender, u.phone, u.address\n"
-                    + "from [User] u join [Role] r on u.role_id = r.id\n"
-                    + "where u.role_id = 3\n"
-                    + "order by user_id");
+            preparedStatement = connecion.prepareStatement("select * from [User]");
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Users user = new Users();
@@ -252,13 +213,6 @@ public class UserDAOImpl extends DBContext implements UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
-        } catch (Exception ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        } finally {
-            closeResultSet(rs);
-            closePreparedStatement(preparedStatement);
-            closeConnection(connecion);
         }
     }
     
@@ -270,7 +224,7 @@ public class UserDAOImpl extends DBContext implements UserDAO {
         List<Contract> contr = new ArrayList<>();
         try {
             connecion = getConnection();
-            preparedStatement = connecion.prepareStatement("select * from Contract");
+            preparedStatement = connecion.prepareStatement("select * from [User] u JOIN Contract c on u.user_id = c.user_id");
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Contract contract = new Contract();
@@ -286,13 +240,6 @@ public class UserDAOImpl extends DBContext implements UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
-        } catch (Exception ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        } finally {
-            closeResultSet(rs);
-            closePreparedStatement(preparedStatement);
-            closeConnection(connecion);
         }
     }
     
@@ -304,7 +251,7 @@ public class UserDAOImpl extends DBContext implements UserDAO {
         List<Motobike> moto = new ArrayList<>();
         try {
             connecion = getConnection();
-            preparedStatement = connecion.prepareStatement("select * from Motobike");
+            preparedStatement = connecion.prepareStatement("select * from [User] u JOIN Motobike m on u.user_id = m.user_id");
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Motobike mt = new Motobike();
@@ -313,21 +260,44 @@ public class UserDAOImpl extends DBContext implements UserDAO {
                 mt.setBrand(rs.getString("brand"));
                 mt.setColor(rs.getString("color"));
                 mt.setLisence_plate(rs.getString("lisence_plate"));
-                mt.setVehicle_capacity(rs.getString("vihicle_capacity"));
+                mt.setVehicle_capacity(rs.getString("vehicle_capacity"));
                 moto.add(mt);
             }
             return moto;
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
-        } catch (Exception ex) {
+        }
+    }
+
+    
+    public List<Compensation> getCompensation() throws SQLException, Exception {
+        Connection connecion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        List<Compensation> compen = new ArrayList<>();
+        try {
+            connecion = getConnection();
+            preparedStatement = connecion.prepareStatement("select * from [User] u JOIN Compensation com on u.user_id = com.user_id");
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Compensation comp = new Compensation();
+                comp.setId(rs.getInt("id"));
+                comp.setUserId(rs.getInt("user_id"));
+                comp.setDescription(rs.getString("description"));
+                comp.setDate(rs.getDate("date"));
+                comp.setStatus(rs.getBoolean("status"));
+                compen.add(comp);
+            }
+            return compen;
+        } catch (SQLException ex) {
             Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
-        } finally {
-            closeResultSet(rs);
-            closePreparedStatement(preparedStatement);
-            closeConnection(connecion);
         }
+    }
+    
+    public static void main(String[] args) throws Exception {
+        System.out.println(new UserDAOImpl().getPersonMoto());
     }
 }
 
