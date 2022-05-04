@@ -77,33 +77,47 @@
             <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link text-white active bg-gradient-primary" href="./index.html">
+                        <a class="nav-link text-white active bg-gradient-primary" href="CustomerPage.jsp">
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="material-icons opacity-10">dashboard</i>
                             </div>
-                            <span class="nav-link-text ms-1">Bảng điều khiển</span>
+                            <span class="nav-link-text ms-1">Thông tin cá nhân</span>
                         </a>
 
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white " href="motoofperson.jsp">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">table_view</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Xe sở hữu</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white " href="contractofperson.jsp">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">table_view</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Hợp đồng</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white " href="./pages/tables.html">
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="material-icons opacity-10">table_view</i>
                             </div>
-                            <span class="nav-link-text ms-1">Hợp đồng</span>
-                        </a>
-                        <a class="nav-link text-white " href="./pages/tables.html">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">table_view</i>
-                            </div>
                             <span class="nav-link-text ms-1">Sự kiện bảo hiểm</span>
                         </a>
-                        <a class="nav-link text-white " href="./pages/tables.html">
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white " href="ViewCompensation.jsp">
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="material-icons opacity-10">table_view</i>
                             </div>
                             <span class="nav-link-text ms-1">Bồi thường</span>
                         </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-white " href="./pages/tables.html">
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="material-icons opacity-10">table_view</i>
@@ -123,26 +137,70 @@
                             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Trang</a></li>
                             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Bảng điều khiển</li>
                         </ol>
-                        <h6 class="font-weight-bolder mb-0">Bảng điều khiển</h6>
+                        <h6 class="font-weight-bolder mb-0">Thông tin cá nhân</h6>
                     </nav>
                     <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                         <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                            <div class="input-group input-group-outline">
-                                <label class="form-label">Tìm kiếm...</label>
-                                <input type="text" class="form-control">
-                            </div>
                         </div>
                         <div class="dropdown">
-                            <button class="dropbtn">Khách hàng</button>
+                            <h1>${username}</h1>
+                            <button class="dropbtn">${sessionScope.acc.fullName}</button>
                             <div class="dropdown-content">
-                                <a href="#">Thông tin cá nhân</a>
                                 <a href="#">Đổi mật khẩu</a>
-                                <a href="#">Đăng xuất</a>
+                                <a href="Login.jsp">Đăng xuất</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </nav>
+            <p></p>
+        <div class="container-fluid">
+            <p></p>
+            <p></p>
+            <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">Thông tin cá nhân</h6>
+              </div>
+            </div>
+                    <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                    
+                        
+                            <div class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                <h2>&nbsp;${sessionScope.acc.fullName}</h2>
+                            </div>
+                            <div class="text-secondary text-xs font-weight-bold">
+                                <h4>&emsp;Email : ${sessionScope.acc.email}</h4>
+                            </div>
+                            <div >
+                                <div class="text-secondary text-xs font-weight-bold">
+                                    <h4>&emsp;Ngày sinh : ${sessionScope.acc.birthDate}</h4>
+                                </div>
+                                <div class="text-secondary text-xs font-weight-bold">
+                                    <h4>&emsp;Giới tính : ${sessionScope.acc.gender == "true" ? "Nam" : "Nữ"}</h4>
+                                </div>
+                                <div class="text-secondary text-xs font-weight-bold">
+                                    <h4>&emsp;Địa chỉ : ${sessionScope.acc.address}</h4>
+                                </div>
+                                <div class="text-secondary text-xs font-weight-bold">
+                                    <h4>&emsp;Số điện thoại : ${sessionScope.acc.phone}</h4>
+
+                                </div>
+                            </div>
+                                    <p></p>
+                            
+                        
+                    
+                </table>
+                  </c:forEach>
+                
+                        
+        </div>
             <!-- End Navbar -->
 
         </main>

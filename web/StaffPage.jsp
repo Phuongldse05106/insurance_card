@@ -137,7 +137,7 @@
                             <button class="dropbtn">${cookie['username']}</button>
                             <div class="dropdown-content">
                                 <a href="#">Thông tin cá nhân</a>
-                                <a href="#">Đổi mật khẩu</a>
+                                <a href="ChangePassword.jsp">Đổi mật khẩu</a>
                                 <a href="#">Đăng xuất</a>
                             </div>
                         </div>

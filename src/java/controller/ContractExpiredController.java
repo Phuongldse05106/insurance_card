@@ -5,22 +5,25 @@
  */
 package controller;
 
-import dao.LoginDaoImpl;
-import dao_impl.ChangePasswordDaoImpl;
-import entity.Users;
+import dao.ContractDAO;
+import entity.ContractExtended;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author chubo
+ * @author Duongdt
  */
-public class ChangePassword extends HttpServlet {
+@WebServlet(name = "ContractExpiredController", urlPatterns = {"/ContractExpiredController"})
+public class ContractExpiredController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,33 +37,7 @@ public class ChangePassword extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-//            HttpSession sesson = request.getSession();
-            String oldPass = request.getParameter("oldPassword");
-            String newPass = request.getParameter("newPassword");
-            String newPassAgain = request.getParameter("newPasswordAgain");
-
-            ChangePasswordDaoImpl changePass = new ChangePasswordDaoImpl();
-
-            Cookie[] cookies = request.getCookies();
-
-            int userId = 0;
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("userId")) {
-                        //do something
-                        userId = Integer.parseInt(cookie.getValue());
-                        //value can be retrieved using #cookie.getValue()
-                    }
-                }
-            }
-            if (userId != 0) {
-                changePass.changePassword(userId, newPass);
-            }
-
-        } catch (Exception e) {
-
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -90,6 +67,19 @@ public class ChangePassword extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        try {
+            ContractDAO contractDAO = new ContractDAO();
+            //get all contract
+            List<ContractExtended> listContract = contractDAO.getAllContractExpired();
+             if (listContract == null || listContract.isEmpty()) {
+                request.setAttribute("listContractError", "There's no contract to show!");
+            }
+            request.setAttribute("listContract", listContract);    
+            request.getRequestDispatcher("contract-expired.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ContractListController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -102,3 +92,4 @@ public class ChangePassword extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+}

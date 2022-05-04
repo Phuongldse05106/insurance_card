@@ -1,0 +1,75 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 25, 2022, 6:09:43 PM
+    Author     : my laptop
+*/
+
+/*body{
+  background-image: url(../assets/img/banner2.jpg);
+  background-size: cover;
+}*/
+body{
+    background: linear-gradient(rgba(0,0,0,0.5),#009688),url(..assets/img/banner2.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+.wrap{
+    width: 800px;
+    height: 700px;
+    margin: 30px auto;
+}
+
+h1{
+    font-size: 60px;
+    color: wheat;
+    text-align: center;
+    border-bottom: 2px solid white;
+}
+
+table{
+    color: darkgreen;
+    font-size: 30px;
+}
+
+td{
+    padding: 10px 20px 0px 0px;
+}
+
+.txt{
+    width: 400px;
+    height: 40px;
+    border-radius: 8px ;
+}
+
+.txt:hover{
+    border: 1px solid darkgreen;
+}
+
+.txtarea{
+    width: 600px;
+    height: 200px;
+    border-radius: 8px;
+}
+
+.txtarea:hover{
+    border: 1px solid darkgreen;
+}
+
+.btn{
+    text-align: center;
+    width: 230px;
+    height: 50px;
+    border-radius: 8px;
+    font-size: 20px;
+    color: darkgreen;
+}
+
+.btn:hover{
+    border: 1px solid darkgreen;
+}
+

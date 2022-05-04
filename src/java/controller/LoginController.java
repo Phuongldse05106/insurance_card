@@ -5,19 +5,15 @@
  */
 package controller;
 
-import dao.LoginDaoImpl;
-import entity.Role;
+import dao_impl.LoginDaoImpl;
 import entity.Users;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.apache.catalina.User;
 
 /**
  *
@@ -50,6 +46,8 @@ public class LoginController extends HttpServlet {
                 request.getRequestDispatcher("Login.jsp").forward(request, response);
 
             } else {
+                HttpSession session = request.getSession();
+                session.setAttribute("acc", a);
 //                HttpSession session = request.getSession();
 //                session.setAttribute("acc", a);
 //                session.setMaxInactiveInterval(186400);

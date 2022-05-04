@@ -5,7 +5,7 @@
  */
 package dao_impl;
 
-import context.DBContext;
+import context.DBContext1;
 import entity.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ public class ChangePasswordDaoImpl {
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    DBContext db = new DBContext();
+    DBContext1 db = new DBContext1();
 
     public void changePassword(int userID, String newPass) {
         try {
@@ -30,7 +30,6 @@ public class ChangePasswordDaoImpl {
             
             conn = db.getConnection();
             ps = conn.prepareStatement(query);
-
             ps.setString(1, newPass);
             ps.setInt(2, userID);
             rs = ps.executeQuery();

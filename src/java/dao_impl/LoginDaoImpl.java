@@ -3,19 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package dao_impl;
 
-import context.DBContext;
-import entity.Role;
+import context.DBContext1;
 import entity.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -26,7 +20,7 @@ public class LoginDaoImpl {
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    DBContext db = new DBContext();
+    DBContext1 db = new DBContext1();
 
     public Users checkAccount(String user, String pass) {
         try {
